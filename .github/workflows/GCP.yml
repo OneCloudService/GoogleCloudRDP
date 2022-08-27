@@ -1,0 +1,43 @@
+name: GCP
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    timeout-minutes: 9999
+
+    steps:
+    - name: Download Do Ngrok & NSSM
+      run: |
+        Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/ngrok.zip -OutFile ngrok.zip
+        Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/nssm.exe -OutFile nssm.exe
+    - name: Copy NSSM & Ngrok to Windows Directory.
+      run: | 
+        copy nssm.exe C:\Windows\System32
+        copy ngrok.zip C:\Windows\System32
+    - name: Extraindo ngrok Arquivos
+      run: Expand-Archive ngrok.zip
+    - name: Conectando Sua Conta Do  NGROK
+      run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+    - name: Download Arquivos Importantes.
+      run: |
+        Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/NGROK-AP.bat -OutFile NGROK-AP.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/NGROK-CHECK.bat  -OutFile NGROK-CHECK.bat
+        Invoke-WebRequest  https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/loop.bat -OutFile loop.bat
+    - name: Fazendo YML Arquivo Para NGROK.
+      run: start NGROK-AP.bat
+    - name: Executando Acesso RDP.
+      run: | 
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+    - name: Criando Tunnel
+      run: sc start ngrok
+    - name: Conecte Ao RDP CPU 2 Core - 7GB Ram - 255 SSD.
+      run: cmd /c NGROK-CHECK.bat
+    - name: RDP Pronto Tempo Máximo: 6H.
+      run: cmd /c loop.bat
