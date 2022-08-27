@@ -39,5 +39,5 @@ jobs:
       run: sc start ngrok
     - name: Conecte Ao RDP CPU 2 Core - 7GB Ram - 255 SSD.
       run: cmd /c NGROK-CHECK.bat
-    - name: RDP Pronto Tempo Máximo: 6H.
+    - name: RDP Pronto Tempo Máximo: 6H
       run: cmd /c loop.bat
