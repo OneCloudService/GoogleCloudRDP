@@ -10,8 +10,9 @@ jobs:
 
     steps:
     - name: Download do ngrok
-      run: Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/ngrok.zip -OutFile ngrok.zip
-      run: Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/rdp.bat -OutFile rdp.bat
+      run: |
+       Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/ngrok.zip -OutFile ngrok.zip
+       Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/rdp.bat -OutFile rdp.bat
     - name: Extraindo Zip
       run: Expand-Archive ngrok.zip
     - name: Auth
