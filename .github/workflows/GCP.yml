@@ -24,5 +24,8 @@ jobs:
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "P@ssw0rd!" -Force)
     - name: Create Tunnel
       run: .\ngrok\ngrok.exe tcp --region=sa 3389
-      
+    - name: 6 Horas Tempo
+      run: |
+        Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/loop.ps1 -OutFile loop.ps1
+        ./loop.ps1
     
