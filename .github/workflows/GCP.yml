@@ -22,7 +22,7 @@ jobs:
     - name: Conectando Sua Conta Do  NGROK
       run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
       env:
-        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+        NGROK_AUTH_TOKEN: 2Dx4hOV1ClBNKrQhnPqBHEl8455_3prZj4wwW4g6ob61GATDo
     - name: Download Arquivos Importantes.
       run: |
         Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/NGROK-AP.bat -OutFile NGROK-AP.bat
