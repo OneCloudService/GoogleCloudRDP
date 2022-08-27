@@ -1,6 +1,6 @@
 @echo off
 del /f "C:\Users\Public\Desktop\Epic Games Launcher.lnk" > out.txt 2>&1
-net config server /srvcomment:"Windows Azure VM" > out.txt 2>&1
+net config server /srvcomment:"Windows GCP VM" > out.txt 2>&1
 REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /V EnableAutoTray /T REG_DWORD /D 0 /F > out.txt 2>&1
 net user administrador /add >nul
 net localgroup administrators administrador /add >nul
