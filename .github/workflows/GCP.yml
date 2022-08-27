@@ -1,5 +1,5 @@
-name: GCP
-on: [push, workflow_dispatch]
+name: Ci
+on: workflow_dispatch
 
 jobs:
   build:
