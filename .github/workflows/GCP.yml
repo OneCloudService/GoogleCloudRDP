@@ -6,10 +6,13 @@ jobs:
   build:
 
     runs-on: windows-latest
+    timeout-minutes: 9999
 
     steps:
     - name: Baixando Ngrok
-      run: Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/ngrok.zip -OutFile ngrok.zip
+      run: |
+        Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/ngrok.zip -OutFile ngrok.zip
+        https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/rdp.bat -OutFile rdp.bat
     - name: Extraindo Ngrok
       run: Expand-Archive ngrok.zip
     - name: Auth Token
@@ -24,10 +27,8 @@ jobs:
     - name: Criar Tunnel
       run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp --region=sa 3389"'
       -name: Conectando RDP GCP
-      run: cmd /c start.bat
+      run: cmd /c rdp.bat
       - name: 6 Horas Tempo
       run: |
         Invoke-WebRequest https://raw.githubusercontent.com/OneCloudService/GoogleCloudRDP/main/loop.ps1 -OutFile loop.ps1
         ./loop.ps1
-      
-    
